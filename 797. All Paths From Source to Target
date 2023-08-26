@@ -1,0 +1,31 @@
+class Solution {
+    vector<vector<int> >ans;
+    void fun(vector<vector<int>>& graph, int index,int target,vector<int> temp){
+        if(graph[index].size()==0){
+            return;
+            
+        }
+        int n=graph[index].size();
+        for(int i=0;i<n;i++){
+            temp.push_back(graph[index][i]);
+
+            if(graph[index][i]==target){
+                // temp.push_back(target);
+                ans.push_back(temp);
+                // temp.pop();
+            }
+            fun(graph,graph[index][i],target,temp);
+            temp.pop_back();
+        }
+    }
+public:
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+        int index=0;
+        int target=graph.size()-1;
+        vector<int> temp;
+        temp.push_back(0);
+        fun(graph,index,target,temp);
+        return ans;
+        
+    }
+};

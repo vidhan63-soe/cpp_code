@@ -1,0 +1,46 @@
+class Solution {
+    set<string> st;
+
+    void fun(string s, int i, string t, int n) {
+        if (i == n) {
+            st.insert(t);
+            return;
+        }
+
+        string temp = s;
+
+        if (i == 0) {
+            for (int j = 0; j < 3; j++) {
+                t.push_back(s[j]);
+                fun(s, i + 1, t, n);
+                t.pop_back();
+            }
+        } else {
+            temp.erase(temp.begin() + (t[i - 1] - 'a'));
+            for (int j = 0; j < temp.size(); j++) {
+                t.push_back(temp[j]);
+                fun(s, i + 1, t, n);
+                t.pop_back();
+            }
+        }
+    }
+
+public:
+    string getHappyString(int n, int k) {
+        string s;
+
+        if (n == 0) {
+            return s;
+        }
+        s = "abc";
+        string t;
+        fun(s, 0, t, n);
+
+        if (st.size() < k) {
+            return "";
+        }
+
+        vector<string> happyStrings(st.begin(), st.end());
+        return happyStrings[k - 1];
+    }
+};

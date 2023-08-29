@@ -1,0 +1,29 @@
+class Solution {
+    vector<string> ans;
+    
+    void fun(string s, string t, int i, int n) {
+        if (i == n) {
+            ans.push_back(t);
+            return;
+        }
+        
+        if (s[i] >= '0' && s[i] <= '9') {
+            t.push_back(s[i]);
+            fun(s, t, i + 1, n);
+        } else {
+            t.push_back(tolower(s[i]));
+            fun(s, t, i + 1, n);
+            t.pop_back();
+            t.push_back(toupper(s[i]));
+            fun(s, t, i + 1, n);
+        }
+    }
+    
+public:
+    vector<string> letterCasePermutation(string s) {
+        int n = s.length();
+        string t;
+        fun(s, t, 0, n);
+        return ans;
+    }
+};

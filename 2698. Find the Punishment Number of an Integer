@@ -1,0 +1,39 @@
+class Solution {
+private:
+    bool fun(int s, int i) {
+        if (i == s) {
+            return true;
+        }
+        if (i > s || i < 0) {
+            return false;
+        }
+        
+        string t = to_string(s);
+        for (int ii = 0; ii < t.size() - 1; ii++) {  // Adjusted loop range
+            string r = t.substr(0, ii + 1);
+            int x = stoi(r);
+            int y = stoi(t.substr(ii + 1));
+            if (fun(y, i - x)) {
+                return true;
+            }
+        }
+        
+        return false;  
+    }
+
+public:
+    int punishmentNumber(int n) {
+        if (n == 1) {
+            return 1;
+        }
+        
+        int ans = 0;
+        for (int i = 1; i <= n; i++) {
+            if (fun(i * i, i)) {
+                ans+=(i*i);
+            }
+        }
+        
+        return ans;
+    }
+};

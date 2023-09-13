@@ -1,0 +1,37 @@
+class Solution {
+  bool fun(vector<int>& nums,int i){
+    if(i==0){
+      return false;
+
+    }
+    if(i==1){
+      return nums[i]==nums[0];
+    }
+    if(i==2){
+      if((nums[0]==nums[1]&&nums[1]==nums[2])||(nums[0]==nums[1]-1&&nums[1]==nums[2]-1)){
+        return true;
+      }
+      return false;
+    }
+    if(nums[i]==nums[i-1]&&nums[i]==nums[i-2]){
+      return fun(nums,i-2)||fun(nums,i-3);
+    }
+    if(nums[i]==nums[i-1]){
+      return fun(nums,i-2);
+    }
+    if(nums[i]==nums[i-1]+1&&nums[i-1]==nums[i-2]+1){
+      return fun(nums,i-3);
+    }
+    return false;
+  }
+public:
+    bool validPartition(vector<int>& nums) {
+      int n=nums.size();
+      if(n==2){
+        return nums[0]==nums[1];
+      }
+    //   sort(nums.begin(),nums.end());
+      return fun(nums,n-1);
+        
+    }
+};

@@ -1,0 +1,30 @@
+class Solution {
+    int fun(int i,vector<int>& dp){
+        if(dp[i]!=-1){
+            return max(i,dp[i]);
+        }
+       
+        for(int j=1;j<i;j++){
+            int a=fun(j,dp);
+            int b=fun(i-j,dp);
+            int t=a*b;
+            dp[i]=max(t,dp[i]);
+
+
+        }
+        return dp[i];
+    }
+public:
+    int integerBreak(int n) {
+        if(n<=2){
+            return 1;
+        }
+        vector<int> dp(n+1,-1);
+        dp[0]=1;
+        dp[1]=1;
+        dp[2]=1;
+        
+        return fun(n,dp);
+        
+    }
+};

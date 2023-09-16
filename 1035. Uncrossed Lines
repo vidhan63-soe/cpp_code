@@ -1,0 +1,25 @@
+class Solution {
+    int fun(vector<int>& nums1, vector<int>& nums2, int i, int j, map<string, int>& m) {
+        if (i == nums1.size() || j == nums2.size()) {
+            return 0;
+        }
+        int count = 0;
+        string s = to_string(i) + "R"+to_string(j);
+        if (m.find(s) != m.end()) {
+            return m[s];
+        }
+        if (nums1[i] == nums2[j]) {
+            count = 1 + fun(nums1, nums2, i + 1, j + 1, m);
+        }
+        else {
+            count = max(fun(nums1, nums2, i + 1, j, m), fun(nums1, nums2, i, j + 1, m));
+        }
+        m[s] = count;
+        return count;
+    }
+public:
+    int maxUncrossedLines(vector<int>& nums1, vector<int>& nums2) {
+        map<string, int> m;
+        return fun(nums1, nums2, 0, 0, m);
+    }
+};

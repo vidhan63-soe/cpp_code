@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<int> replaceElements(vector<int>& nums) {
+        int n=nums.size();
+        if(n==1){
+            return {-1};
+        }
+        int t=nums[n-1];
+        nums[n-1]=-1;
+        for(int i=n-2;i>=0;i--){
+            if(nums[i]>t){
+                int r=nums[i];
+
+                nums[i]=t;
+                t=r;
+            }
+            else{
+                nums[i]=t;
+            }
+            
+        }
+        return nums;
+        
+    }
+};

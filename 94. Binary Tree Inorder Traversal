@@ -1,0 +1,27 @@
+class Solution {
+    vector<int> ans;
+    
+    void fun(TreeNode* root){
+        if(root==nullptr){
+            return;
+        }
+        fun(root->left);
+        ans.push_back(root->val);
+        fun(root->right);
+    }
+    
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        if(root==nullptr){
+            return {};
+        }
+        
+        // Clear the ans vector before traversal
+        ans.clear();
+        
+        // Perform inorder traversal and populate ans
+        fun(root);
+        
+        return ans;
+    }
+};

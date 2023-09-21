@@ -1,0 +1,46 @@
+class Solution {
+public:
+    int openLock(vector<string>& deadends, string target) {
+        unordered_set<string> dead(deadends.begin(), deadends.end());
+        unordered_set<string> visited;
+
+        if (dead.find("0000") != dead.end()) {
+            return -1;
+        }
+
+        queue<pair<string, int>> q;
+        q.push({"0000", 0});
+        visited.insert("0000");
+
+        while (!q.empty()) {
+            auto front = q.front();
+            q.pop();
+
+            string current = front.first;
+            int steps = front.second;
+
+            if (current == target) {
+                return steps;
+            }
+
+            for (int i = 0; i < 4; ++i) {
+                string next = current;
+                string next2=current;
+
+                next[i] = ((current[i] - '0' + 1) % 10) + '0';
+                if (dead.find(next) == dead.end() && visited.find(next) == visited.end()) {
+                    q.push({next, steps + 1});
+                    visited.insert(next);
+                }
+
+                next2[i] = ((current[i] - '0' + 9) % 10) + '0';
+                if (dead.find(next2) == dead.end() && visited.find(next2) == visited.end()) {
+                    q.push({next2, steps + 1});
+                    visited.insert(next2);
+                }
+            }
+        }
+
+        return -1;
+    }
+};

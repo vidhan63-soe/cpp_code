@@ -1,0 +1,44 @@
+class Solution {
+    bool isCycle(vector<vector<int>>& adj, int i, vector<bool>& visited, vector<bool>& dfsVisited) {
+        visited[i] = true;
+        dfsVisited[i] = true;
+        
+        for (auto j : adj[i]) {
+            if (!visited[j]) {
+                if (isCycle(adj, j, visited, dfsVisited)) {
+                    return true;
+                }
+            } else if (dfsVisited[j]) {
+                return true;
+            }
+        }
+        
+        dfsVisited[i] = false;
+        return false;
+    }
+    
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        if (numCourses <= 1) {
+            return true;
+        }
+        
+        vector<vector<int>> adj(numCourses);
+        for (auto& prereq : prerequisites) {
+            adj[prereq[1]].push_back(prereq[0]); // Edge from prerequisite course to the course
+        }
+        
+        vector<bool> visited(numCourses, false);
+        vector<bool> dfsVisited(numCourses, false);
+
+        for (int i = 0; i < numCourses; ++i) {
+            if (!visited[i]) {
+                if (isCycle(adj, i, visited, dfsVisited)) {
+                    return false;
+                }
+            }
+        }
+        
+        return true;
+    }
+};

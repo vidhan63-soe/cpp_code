@@ -1,0 +1,30 @@
+class Solution {
+   static bool fun(const pair<int, int>& a, const pair<int, int>& b) {
+        return a.second > b.second; // Change to '>' for descending order
+    }
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        int n = nums.size();
+        if (n <= k) {
+            return nums;
+        }
+        if (n == 1) {
+            return nums;
+        }
+        unordered_map<int, int> m;
+        for (int i = 0; i < n; i++) {
+            m[nums[i]]++;
+        }
+        vector<int> ans;
+        vector<pair<int, int>> v(m.begin(), m.end());
+        sort(v.begin(), v.end(), fun);
+        for (auto i : v) {
+            if (k == 0) {
+                break;
+            }
+            ans.push_back(i.first);
+            k--;
+        }
+        return ans;
+    }
+};

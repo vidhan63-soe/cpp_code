@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        int n = nums.size();
+        if (n == 1) {
+            return nums[0];
+        }
+        int l = 0;
+        int r = n - 1;
+
+        while (l < r) {
+            int mid = l + (r - l) / 2;
+            if (nums[mid] > nums[r]) {
+                // The pivot point is in the right half, move 'l' to the right of 'mid'.
+                l = mid + 1;
+            } else {
+                // The pivot point is in the left half, or 'mid' is the pivot.
+                r = mid;
+            }
+        }
+
+        // 'l' will point to the minimum element after the loop.
+        return nums[l];
+    }
+};
